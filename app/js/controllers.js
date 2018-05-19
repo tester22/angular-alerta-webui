@@ -425,10 +425,8 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
       Alert.attributes({id: id}, {attributes: {jiraKey: 'None', jiraUser: $scope.user, jiraProduct: jiraProduct, jiraCategory: jiraCategory, jiraComment: jiraComment}}, function(data) {
       Alert.action({id: id}, {action: 'ack', text: 'status change via console' + byUser}, function(data) {
         $route.reload();
-      });
-      Alert.status({id: id}, {status: 'ack', text: 'status change via console' + byUser}, function(data) {
-            $route.reload();
-          });
+        })
+      })
     };
 
     $scope.shelveAlert = function(id, user, timeout) {
