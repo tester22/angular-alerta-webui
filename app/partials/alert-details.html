@@ -29,7 +29,7 @@
           ng-click="unshelveAlert(alert.id, user)"
           ng-show="alert.status == 'shelved'"><i class="glyphicon glyphicon-time"></i> Unshelve</button>
   <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-primary"
-          ng-click="ackAlert(alert.id)"
+          data-toggle="modal" data-target="#myModal"
           ng-disabled="alert.status == 'ack'"><i class="glyphicon glyphicon-ok-circle"></i> Ack</button>
   <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-warning"
           ng-click="closeAlert(alert.id)"
@@ -110,3 +110,38 @@
     <td class="hidden-xs"><span ng-bind-html="history.text"></span></td>
   </tr>
 </table>
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create Jira Issue</h4>
+        </div>
+        <div class="modal-body">
+	      
+          <p>Some text in the modal. {{ alert.attributes.jiraKey }}</p>
+          <div class="form-group">
+  <label for="jiraProduct">Jira Product:</label>
+  <input type="text" class="form-control" id="jiraProduct" value="{{ alert.attributes.jiraProduct }}">
+</div>
+<div class="form-group">
+  <label for="jiraCategory">Jira Category:</label>
+  <input type="text" class="form-control" id="jiraCategory" value="{{ alert.attributes.jiraCategory }}">
+</div>
+  <label for="comment">Jira Comment:</label>
+  <textarea class="form-control" rows="5" id="jiraComment">{{ alert.attributes.jiraComment }}</textarea>
+        </div>
+        <div class="modal-footer">
+	        <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-primary"
+          ng-click="ackAlert(alert.id)"
+          ng-disabled="alert.status == 'ack'" data-dismiss="modal"><i class="glyphicon glyphicon-ok-circle"></i> Ack</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
